@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('latitude');
             $table->integer('longitude');
             $table->text('description')->nullable();
-            $table->enum('severity_scale', ['low', 'medium', 'high']);
+            $table->enum('severity_scale', ['low', 'medium', 'high']); 
             $table->timestamps();
         });
     }
