@@ -16,11 +16,12 @@ return new class extends Migration
             $table->string('name');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->date('date');
-            $table->integer('latitude');
-            $table->integer('longitude');
+            $table->decimal('latitude', 10, 8);
+            $table->decimal('longitude', 10, 8);
             $table->text('description')->nullable();
             $table->enum('severity_scale', ['low', 'medium', 'high']); 
             $table->timestamps();
+            $table->text('image')->nullable();
         });
     }
 
