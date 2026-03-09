@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Report;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Storage;
 class ReportController extends Controller
 {
     /**
@@ -12,7 +12,8 @@ class ReportController extends Controller
      */
     public function index()
     {
-        //
+        $reports = Report::all();
+        return view('reports.index', compact('reports'));
     }
 
     /**
@@ -20,7 +21,7 @@ class ReportController extends Controller
      */
     public function create()
     {
-        //
+        return view('reports.create');
     }
 
     /**
@@ -28,7 +29,31 @@ class ReportController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'date' => 'required|date',
+            'image' => 'nullable|image|max:2048',
+            'description' => 'required|string|max:1000',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'severity_scale' => 'required|integer|between:1,10',
+        ]);
+
+        if($request-> hasFile('image')){
+            $imageName = time().'.'.$request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+        }
+
+        Report::create([
+            'user_id' => auth()->id(),
+            'name' => $request->name,
+            'date' => $request->date,
+            'image' => $imageName ?? null,
+            'description' => $request->description,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'severity_scale' => $request->severity_scale,
+        ]);
     }
 
     /**
@@ -36,7 +61,7 @@ class ReportController extends Controller
      */
     public function show(Report $report)
     {
-        //
+        return view('reports.show')->with('report', $report);
     }
 
     /**
@@ -44,7 +69,7 @@ class ReportController extends Controller
      */
     public function edit(Report $report)
     {
-        //
+        return view('reports.edit')->with('report', $report);
     }
 
     /**
@@ -52,7 +77,33 @@ class ReportController extends Controller
      */
     public function update(Request $request, Report $report)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'date' => 'required|date',
+            'image' => 'nullable|image|max:2048',
+            'description' => 'required|string|max:1000',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'severity_scale' => 'required|integer|between:1,10',
+        ]);
+
+        if($request-> hasFile('image')){
+            $imageName = time().'.'.$request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+        }
+
+        $report->update([
+            'user_id' => auth()->id(),
+            'name' => $request->name,
+            'date' => $request->date,
+            'image' => $imageName ?? $report->image,
+            'description' => $request->description,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'severity_scale' => $request->severity_scale,
+        ]);
+
+        return redirect()->route('reports.index')->with('success', 'Report updated successfully.');
     }
 
     /**
@@ -60,6 +111,7 @@ class ReportController extends Controller
      */
     public function destroy(Report $report)
     {
-        //
+        $report->delete();
+        return redirect()->route('reports.index')->with('success', 'Report deleted successfully.');
     }
 }
