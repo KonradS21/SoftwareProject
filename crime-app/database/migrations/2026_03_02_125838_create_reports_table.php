@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('date');
             $table->decimal('latitude', 10, 8);
             $table->decimal('longitude', 10, 8);
-            $table->text('description')->nullable();
+            $table->text('description');
             $table->enum('severity_scale', ['low', 'medium', 'high']); 
             $table->timestamps();
             $table->text('image')->nullable();

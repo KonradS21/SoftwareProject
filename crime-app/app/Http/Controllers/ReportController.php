@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Report;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
 class ReportController extends Controller
 {
@@ -29,6 +30,7 @@ class ReportController extends Controller
      */
     public function store(Request $request)
     {
+        // Validate incoming data
         $request->validate([
             'name' => 'required|string|max:255',
             'date' => 'required|date',
@@ -36,24 +38,29 @@ class ReportController extends Controller
             'description' => 'required|string|max:1000',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
-            'severity_scale' => 'required|integer|between:1,10',
+            'severity_scale' => ['required', Rule::in(['low', 'medium', 'high'])],
         ]);
 
-        if($request-> hasFile('image')){
-            $imageName = time().'.'.$request->image->extension();
+        // Handle image upload
+        $imageName = null;
+        if ($request->hasFile('image')) {
+            $imageName = 'images/' . time() . '.' . $request->image->extension();
             $request->image->move(public_path('images'), $imageName);
         }
 
+        // Insert into database
         Report::create([
             'user_id' => auth()->id(),
             'name' => $request->name,
             'date' => $request->date,
-            'image' => $imageName ?? null,
             'description' => $request->description,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
             'severity_scale' => $request->severity_scale,
+            'image' => $imageName, // nullable if no file uploaded
         ]);
+
+        return redirect()->route('reports.index')->with('success', 'Report added successfully!');
     }
 
     /**
@@ -84,7 +91,10 @@ class ReportController extends Controller
             'description' => 'required|string|max:1000',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
-            'severity_scale' => 'required|integer|between:1,10',
+            'severity_scale' => [
+                'required',
+                Rule::in(['low', 'medium', 'high']),
+            ],
         ]);
 
         if($request-> hasFile('image')){

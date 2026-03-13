@@ -9,15 +9,13 @@ class Report extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'user_id',
-        'date',
-        'latitude',
-        'longitude',
-        'description',
-        'severity_scale',
-        'image',
-        'created_at',
-        'updated_at'
-    ];
+    'user_id',
+    'name',
+    'date',
+    'image',
+    'description',
+    'latitude',
+    'longitude',
+    'severity_scale',
+];
 }
