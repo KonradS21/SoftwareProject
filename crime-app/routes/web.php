@@ -9,7 +9,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
+Route::get('/', function () {
+    return view('welcome');
+})->name('welcome');
 
 Route::get('/dashboard', function () {
     $reports = Report::all();

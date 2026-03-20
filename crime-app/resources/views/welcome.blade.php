@@ -36,11 +36,11 @@
             
         <main class="flex max-w-[335px] w-full text-white flex-col-reverse lg:max-w-4xl lg:flex-row">
             
-                <div class="bg-blue-900 text-[13px] leading-[20px] flex-1 p-6 pb-12 lg:p-20  dark:bg-[#161615] dark:text-[#EDEDEC] shadow-[inset_0px_0px_0px_1px_rgba(26,26,0,0.16)] dark:shadow-[inset_0px_0px_0px_1px_#fffaed2d] rounded">
+                <div class="bg-blue-900 text-[13px] leading-[20px] flex-1 p-6 pb-12 lg:p-20  dark:bg-blue-900 dark:text-[#EDEDEC] shadow-[inset_0px_0px_0px_1px_rgba(26,26,0,0.16)] dark:shadow-[inset_0px_0px_0px_1px_#fffaed2d] rounded">
                     <h1 class="text-3xl lg:text-4xl text-white font-bold mb-6">Welcome to Crime App</h1>
                     <div class="container-lg">
                         <div class=" flex gap-20 flex-row flex-wrap justify-between">
-                            <div class="p-5 flex-1 col rounded text-blue-900 bg-white mb-4">
+                            <div class="p-5 flex-1 col rounded text-blue-900 bg-white  mb-4">
                                 <h1 class=" text-2xl lg:text-3xl font-bold mb-6">Click here to seek help or resources</h1>
                                 <p class="pb-5">Find resources and support for victims of crimes as well as rehabilitating offenders.</p>
                                 <a

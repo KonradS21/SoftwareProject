@@ -1,5 +1,9 @@
-<x-guest-layout >
-    <body class=" bg-blue-200">
+<x-guest-auth-layout>
+    <div class="flex justify-center align-center">
+            <a href="/">
+                <x-application-logo class="w-40 h-40 fill-current text-gray-500" />
+            </a>
+        </div>
     <form  method="POST" action="{{ route('register') }}">
         @csrf
 
@@ -51,4 +55,4 @@
         </div>
     </form>
     </body>
-</x-guest-layout>
+</x-guest-auth-layout>
