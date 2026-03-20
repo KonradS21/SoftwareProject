@@ -39,26 +39,26 @@
                                     />
                                 </a>
 
-                                {{-- Actions --}}
-                                <div class="flex justify-between items-center mt-4">
+                               @if(auth()->check() && auth()->user()->isAdmin())
+    <div class="flex justify-between items-center mt-4">
 
-                                    <a href="{{ route('reports.edit', $report) }}"
-                                       class="text-blue-600 hover:text-blue-800 font-medium">
-                                        {{ __("Edit") }}
-                                    </a>
+        <a href="{{ route('reports.edit', $report) }}"
+           class="text-blue-600 hover:text-blue-800 font-medium">
+            {{ __("Edit") }}
+        </a>
 
-                                    <form action="{{ route('reports.destroy', $report) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
+        <form action="{{ route('reports.destroy', $report) }}" method="POST">
+            @csrf
+            @method('DELETE')
 
-                                        <button type="submit"
-                                                class="text-white bg-blue-900 px-4 py-2 shadow-sm sm:rounded-lg hover:bg-red-800 font-medium">
-                                            {{ __("Delete") }}
-                                        </button>
-                                    </form>
+            <button type="submit"
+                    class="text-white bg-blue-900 px-4 py-2 shadow-sm sm:rounded-lg hover:bg-red-800 font-medium">
+                {{ __("Delete") }}
+            </button>
+        </form>
 
-                                </div>
-
+    </div>
+@endif
                             </div>
 
                         @endforeach
