@@ -97,10 +97,12 @@ class ReportController extends Controller
             ],
         ]);
 
-        if($request-> hasFile('image')){
-            $imageName = time().'.'.$request->image->extension();
+       $imageName = null;
+        if ($request->hasFile('image')) {
+            $imageName = 'images/' . time() . '.' . $request->image->extension();
             $request->image->move(public_path('images'), $imageName);
         }
+
 
         $report->update([
             'user_id' => auth()->id(),
@@ -112,6 +114,10 @@ class ReportController extends Controller
             'longitude' => $request->longitude,
             'severity_scale' => $request->severity_scale,
         ]);
+
+            // Handle image upload
+       
+      
 
         return redirect()->route('reports.index')->with('success', 'Report updated successfully.');
     }
